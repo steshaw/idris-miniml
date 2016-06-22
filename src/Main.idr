@@ -98,14 +98,6 @@ debugEnvirons : Bool
 debugEnvirons = False
 
 mutual
-  execS : (Ctx, Env) -> String -> IO ()
-  execS ctxEnv line =
-    case lex line >>= parse of
-      Right cmds => do ctxEnv' <- execCmds ctxEnv cmds
-                       myRepl ctxEnv'
-      Left err   => do putStrLn $ "Error: " ++ err
-                       myRepl ctxEnv
- 
   myRepl : (Ctx, Env) -> IO ()
   myRepl ctxEnv = do
     when (debugEnvirons) (case ctxEnv of
@@ -118,7 +110,13 @@ mutual
     when (isEof) $ putStrLn ""
     when (isEof == False && line /= quit) (do
       when (line == "") (myRepl ctxEnv)
-      when (line /= "") (execS ctxEnv line)
+      when (line /= "") (
+        case lex line >>= parse of
+          Right cmds => do ctxEnv' <- execCmds ctxEnv cmds
+                           myRepl ctxEnv'
+          Left err   => do putStrLn $ "Error: " ++ err
+                           myRepl ctxEnv
+      )
     )
 
 interactive : IO ()
