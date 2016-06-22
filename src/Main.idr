@@ -108,8 +108,8 @@ mutual
     line <- getLine
     isEof <- fEOF stdin
     if isEof then putStrLn ""
+    else if line == quit then pure ()
     else case line of
-           ":q" => pure ()
            ""   => myRepl ctxEnv
            line => case lex line >>= parse of
                      Right cmds => do ctxEnv' <- execCmds ctxEnv cmds
