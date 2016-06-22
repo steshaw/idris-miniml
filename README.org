@@ -1,0 +1,5 @@
+* MiniML
+
+A simple ML compiler written in [[http://idris-lang.org][Idris]]. Based on miniml from
+[[http://andrej.com/plzoo/][plzoo]]. Some slight differences and probably bugs. Also uses Lightyear
+rather than Menhir (an OCaml LR(1) parser generator).
