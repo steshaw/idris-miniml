@@ -107,17 +107,15 @@ mutual
     putStr prompt
     line <- getLine
     isEof <- fEOF stdin
-    when (isEof) $ putStrLn ""
-    when (isEof == False && line /= quit) (do
-      when (line == "") (myRepl ctxEnv)
-      when (line /= "") (
-        case lex line >>= parse of
-          Right cmds => do ctxEnv' <- execCmds ctxEnv cmds
-                           myRepl ctxEnv'
-          Left err   => do putStrLn $ "Error: " ++ err
-                           myRepl ctxEnv
-      )
-    )
+    if isEof then putStrLn ""
+    else case line of
+           ":q" => pure ()
+           ""   => myRepl ctxEnv
+           line => case lex line >>= parse of
+                     Right cmds => do ctxEnv' <- execCmds ctxEnv cmds
+                                      myRepl ctxEnv'
+                     Left err   => do putStrLn $ "Error: " ++ err
+                                      myRepl ctxEnv
 
 interactive : IO ()
 interactive = do
