@@ -1,6 +1,7 @@
 package miniml
 
-{-
+version = 0.0.1
+
 brief = "Simple ML-like language based on plzoo/miniml"
 author = Steven Shaw <steven@steshaw.org>
 readme = README.org
@@ -8,7 +9,6 @@ license = BSD2
 homepage = http://github.com/steshaw/miniml
 sourceloc = git@github.com:steshaw/miniml.git
 bugtracker = https://github.com/steshaw/miniml/issues
--}
 
 opts = "--nocolor"
 pkgs = effects, lightyear
